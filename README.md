@@ -37,31 +37,63 @@ https://www.kaggle.com/code/radek1/eda-training-a-fast-ai-model-submission
 
 2. Se realiza ejecución de codigo para la conexión a Drive donde estarán alojados los archivos de train y test, previamente compartidos al profesor Raul y monitor Jonathan. Para ello deben realizar lo siguiente:
 
-**¡¡IMPORTANTE!!**
-*   Deben aceptar el acceso a la carpeta **Modelos_l** compartida por Andres Higuita desde el correo adario.higuita@udea.edu.co.
-*   Deben ejecutar el codigo siguiente para iniciar la conexión al drive de ustedes.
-*   Deben permitir que el notebook pueda acceder a sus archivos de Google Drive.
-*   Deben iniciar sesión con la cuenta institucional a las que ses compartió la carpeta **Modelos_l**.
-*   Deben aceptar todas las sugerencias de permisos por defecto, en total son 8 servicios a los que accede el notebook.
-*   Confirmar y finalmente se sincronizaran todos los archivos del drive.
-*   La información sincronizada quedara en la ruta base "content/drive" de los archivos del notebook.
+**⚠️ ¡¡IMPORTANTE!!**  
+   **Siga los siguientes pasos en orden, de arriba hacia abajo, para que la sincronización con Google Drive sea exitosa:**
 
+   a. ✅ **Aceptar acceso compartido**  
+      Acepte la invitación para acceder a la carpeta **Modelos_l** compartida por **Andrés Higuita** desde el correo `adario.higuita@udea.edu.co`.
 
-3. Al aceptar el acceso a la carpeta compartida de drive, con el siguiente codigo se extraen los archivos de test y train alojados en Drive, ya que la carpeta base seria **Modelos_l**.
+   b. 📂 **Mover la carpeta a “Mi unidad”**  
+      Ingrese a su [Google Drive](https://drive.google.com), ubique la carpeta **Modelos_l** en la sección **"Compartido conmigo"**, y arrástrela hacia **"Mi unidad"**.  
+      Esto añadirá un acceso directo necesario para gestionarla desde el Notebook en Colab.
 
-*   Se crea la carpeta **"rsna_project"** dentro de **"content"**.
-*   En ella se extraen-ubican archivos y carpetas: test.csv, train.csv,  test_images (imagenes de testeo) y train_images (imagenes de entrenamiento del modelo).
+   c. ▶️ **Ejecutar el código de conexión**  
+      En el Notebook de Colab, ejecute la celda correspondiente para montar Google Drive.
+
+   d. 🔐 **Autorizar acceso a archivos**  
+      Cuando se lo solicite, permita que el Notebook acceda a sus archivos de Google Drive.
+
+   e. 🏫 **Usar cuenta institucional**  
+      Inicie sesión con su **cuenta institucional** (la misma a la que se compartió la carpeta **Modelos_l**).
+
+   f. ✅ **Aceptar todos los permisos**  
+      Acepte **todas las solicitudes de permisos por defecto**. En total, son **8 servicios** que el Notebook necesita para acceder y sincronizar.
+
+   g. ☁️ **Confirmar y sincronizar**  
+      Una vez completados los pasos anteriores, el sistema sincronizará automáticamente los archivos compartidos.
+
+   h. 📁 **Ruta de acceso en el entorno Colab**  
+      Los archivos estarán disponibles desde la siguiente ruta dentro del entorno del Notebook:  
+      `/content/drive/MyDrive/Modelos_l/`
+
+3. Una vez aceptado el acceso a la carpeta compartida en Google Drive, se procede a extraer los archivos necesarios para el entrenamiento y prueba del modelo desde la carpeta base **Modelos_l**. Para ello, debe ejecutarse el bloque de código correspondiente en el notebook.
+
+   Este paso realizará lo siguiente:
+
+   - 📁 Se crea automáticamente una carpeta llamada **`rsna_project`** dentro del directorio **`/content/`** del entorno de Colab.
+   - 📦 Dentro de esta carpeta se extraen o ubican los archivos y carpetas compartidas desde Drive, específicamente:
+     - `train.csv` → Archivo con datos de entrenamiento.
+     - `test.csv` → Archivo con datos de prueba.
+     - `train_images/` → Carpeta que contiene las imágenes utilizadas para entrenar el modelo.
+     - `test_images/` → Carpeta que contiene las imágenes que serán utilizadas para realizar predicciones.
+
+   ✅ Asegúrese de que los archivos estén correctamente ubicados en la carpeta **Modelos_l** dentro de su Google Drive antes de ejecutar este paso.
 
 
 4. Se realiza importación de librerias.
 
-**¡¡IMPORTANTE!!**
+**⚠️ ¡¡IMPORTANTE!!**  
+   Si aparece un error al importar `fastai.vision.all`, debe **reiniciar el entorno de ejecución** siguiendo estos pasos:
 
-Si sale error en en la importación de **fastai.vision.all** se debe reiniciar el entorno de ejecución, de la siguiente manera:
+   a. 🧭 Dirígete a la barra de opciones superior del notebook de Colab.  
+   b. 🔄 Haz clic en **"Entorno de ejecución"**.  
+   c. 📌 En el menú desplegable, selecciona **"Reiniciar la sesión"**.  
+   d. ⏳ Espera unos segundos a que se reinicie el entorno por completo.  
+   e. ✅ Una vez reiniciado, puedes continuar ejecutando el resto del código **sin inconvenientes**.
 
-* En la barra de opciones se da clic a la opción **Entorno de ejecución**
-* Al desplegarse la lista de opciones se da clic en la opción **Reiniciar la sesión**
-* Una vez reiniciado el entorno, se puede continuar con la ejecución de los pasos sin inconvenientes.
+   ---
+
+   💡 *Reiniciar el entorno suele resolver errores relacionados con incompatibilidades temporales de librerías.*
 
 
 5. Se define ruta de trabajo y cargar train.csv
