@@ -126,7 +126,106 @@ https://www.kaggle.com/code/radek1/eda-training-a-fast-ai-model-submission
 <summary style="cursor: pointer; font-weight: bold; font-size:22px">📁 Paso a paso de ejecución del proyecto en la fase 2</summary>
 <br>
 
-*Proximamente...*
+## **CONSIDERACIONES INICIALES**
+
+* *En esta fase 2 es necesario contemplar que la ejecución de la misma se realizará en un SO Linux (preferiblemente Ubuntu) con Docker instalado de acuerdo a la documentación oficial en https://docs.docker.com/engine/install/*
+
+* *Por favor leer detalladamente y seguir las instrucciones de arriba hacia abajo*
+
+### **PASOS PARA LA CORRECTA EJECUCIÓN**
+
+Al clonar o descargar este repositorio obtenemos la carpeta fase-2 con los archivos:
+
+*Cada archivo tiene los comentarios con explicaciones necesarias dado el caso*
+
+├── Dockerfile
+
+├── export.pkl
+
+├── helpers.py
+
+├── predict.py
+
+├── requirements.txt
+
+├── submission.csv
+
+├── test.csv
+
+├── train.csv
+
+├── train.py
+
+**Posteriormente ubicados en la carpeta fase-2, realizamos lo siguiente:**
+
+Construimos la imagen de Docker con el comando:
+```bash
+sudo docker build -t cancer_prediction_model .
+```
+***PD: Por favor tener un poco de paciencia en la espera de la construcción de la imagen ya que para la ejecución de este proyecto es explicitamente necesario usar librerias de torch y fastai las cuales son extensas***
+
+Esta imagen creada contiene los mismos archivos del repositorio y ademas las carpetas **test_images** (*contiene imagenes para procesar una predicción*) y **train_images** (*contiene una cantidad limitada de 94 imagenes para el entrenamiento*), esto con la finalidad mensionada por parte del profesor que este fuese autocontenido, estas carpetas contienen las imagenes para testear/predecir y las imagenes para entrenar el modelo.
+
+Con esta imagen podemos hacer ejecuciones:
+
+#### **DESDE LA PARTE EXTERNA DEL CONTENEDOR**
+
+##### **PREDECIR CANCER DE MAMA**
+Podemos precedir indicandole la ubicación del archivo **test.csv** (*que contiene los indices y datos de las imagenes a predecir cancer de mama*), la ubicación del **export.pkl** (*el modelo entrenado*), la ubicación del archivo **submission.csv** (*el archivo que contiene las predicciones resultantes*) y por ultimo se indica que se ejecute el archivo **predict.py** con el siguiente script:
+
+```bash
+sudo docker run --rm -v $(pwd)/submission.csv:/app/submission.csv -v $(pwd)/test.csv:/app/test.csv -v $(pwd)/export.pkl:/app/export.pkl cancer_prediction_model python predict.py
+```
+Obteniendo **submission.csv** como el siguiente:
+```bash
+image_id,cancer
+736471439,0.22821328043937683
+```
+
+*PD: Las imagenes indicadas en el archivo **test.csv** se encuentran dentro del contenedor con la finalidad de autogestión.*
+
+##### **ENTRENAR EL MODELO DE PREDICCIÓN**
+Podemos entrenar el modelo indicandole la ubicación del archivo **train.csv** (*que contiene los indices y datos de las imagenes para entrenar el modelo*), la ubicación del **export.pkl** (*el modelo entrenado y que será sobreescrito con el nuevo entrenamiento realizado*) y por ultimo se indica que se ejecute el archivo **train.py** con el siguiente script:
+
+```bash
+sudo docker run --rm -v $(pwd)/export.pkl:/export.pkl -v $(pwd)/train.csv:/train.csv cancer_prediction_model python train.py
+```
+Una vez finalizada la ejecución se obtiene el archivo **export.pkl** con el cual podemos hacer nuevas predicción y validar su rendimiento.
+
+*PD: Las imagenes indicadas en el archivo **train.csv** se encuentran dentro del contenedor con la finalidad de autogestión.*
+
+
+#### **DESDE LA PARTE INTERNA DEL CONTENEDOR**
+
+Debemos de ingresar al contenedor con el siguiente comando:
+
+```bash
+sudo docker run -it cancer_prediction_model bash
+```
+
+##### **PREDECIR CANCER DE MAMA**
+Podemos precedir ajustando las variables del archivo **test.csv** (*que contiene los indices y datos de las imagenes a predecir cancer de mama*) si se requiere y solo sería ejecutar el archivo **predict.py** con el siguiente script:
+
+```bash
+python predict.py
+```
+Obteniendo **submission.csv** como el siguiente:
+```bash
+image_id,cancer
+736471439,0.22821328043937683
+```
+
+*PD: Las imagenes indicadas en el archivo **test.csv** se encuentran dentro del contenedor con la finalidad de autogestión.*
+
+##### **ENTRENAR EL MODELO DE PREDICCIÓN**
+Podemos entrenar el modelo ajustando las variables del archivo del archivo **train.csv** (*que contiene los indices y datos de las imagenes para entrenar el modelo*) si se requiere y se ejecuta el  archivo **train.py** con el siguiente script:
+
+```bash
+python train.py
+```
+Una vez finalizada la ejecución se obtiene el archivo **export.pkl** con el cual podemos hacer nuevas predicción y validar su rendimiento.
+
+*PD: Las imagenes indicadas en el archivo **train.csv** se encuentran dentro del contenedor con la finalidad de autogestión.*
 
 </details>
 
