@@ -204,7 +204,7 @@ sudo docker run -it cancer_prediction_model bash
 ```
 
 ##### **PREDECIR CANCER DE MAMA**
-Podemos precedir ajustando las variables del archivo **test.csv** (*que contiene los indices y datos de las imagenes a predecir cancer de mama*) si se requiere y solo sería ejecutar el archivo **predict.py** con el siguiente script:
+Podemos precedir ajustando las variables del archivo **test.csv** (*que contiene los indices y datos de las imagenes a predecir cancer de mama*) si se requiere con un editor de texto y solo sería ejecutar el archivo **predict.py** con el siguiente script:
 
 ```bash
 python predict.py
@@ -215,6 +215,11 @@ image_id,cancer
 736471439,0.22821328043937683
 ```
 
+Este archivo se puede abrir con el comando:
+```bash
+cat submission.csv
+```
+
 *PD: Las imagenes indicadas en el archivo **test.csv** se encuentran dentro del contenedor con la finalidad de autogestión.*
 
 ##### **ENTRENAR EL MODELO DE PREDICCIÓN**
@@ -223,7 +228,7 @@ Podemos entrenar el modelo ajustando las variables del archivo del archivo **tra
 ```bash
 python train.py
 ```
-Una vez finalizada la ejecución se obtiene el archivo **export.pkl** con el cual podemos hacer nuevas predicción y validar su rendimiento.
+Una vez finalizada la ejecución se obtiene el archivo **export.pkl** con el cual podemos hacer nuevas predicciones y validar el rendimiento del nuevo modelo.
 
 *PD: Las imagenes indicadas en el archivo **train.csv** se encuentran dentro del contenedor con la finalidad de autogestión.*
 
