@@ -7,7 +7,7 @@ Guarda los resultados en un archivo CSV llamado 'submission.csv'.
 from fastai.vision.all import *
 import pandas as pd
 from pathlib import Path
-from helpers import dcm_to_image, get_dcm_path
+from helpers import dcm_to_image, get_dcm_path, get_x_wrapper, get_x, get_y
 
 # Ruta base dentro del contenedor
 path = Path('/app')
