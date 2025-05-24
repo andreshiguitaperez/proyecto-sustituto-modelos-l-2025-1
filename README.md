@@ -156,7 +156,7 @@ Al clonar o descargar este repositorio obtenemos la carpeta fase-2 con los archi
 
 ├── train.py
 
-**Posteriormente ubicados en la carpeta fase-2, realizamos lo siguiente:**
+**Posteriormente ubicados en la carpeta fase-2 en una consola de comandos, realizamos lo siguiente:**
 
 Construimos la imagen de Docker con el comando:
 ```bash
