@@ -240,4 +240,35 @@ Una vez finalizada la ejecución se obtiene el archivo **export.pkl** con el cua
 
 *Proximamente...*
 
+Generar imagen que contiene api
+sudo docker build -t api_cancer_prediction .
+
+Ejecutar contenedor
+sudo docker run -p 5000:5000 api_cancer_prediction
+
+Probar servicios
+
+Para probar desde la maquina ubuntu tener instalada la libreria request
+ pip install requests
+
+Predict
+curl -X POST -F "file=@/home/andres_udem/Documents/PruebaFuncionamiento/proyecto-sustituto-modelos-l-2025-1/fase-3/imagenesPrueba/68070693.dcm" http://localhost:5000/predict
+
+curl -X POST -F "file=@/home/andres_udem/Documents/PruebaFuncionamiento/proyecto-sustituto-modelos-l-2025-1/fase-3/imagenesPrueba/361203119.dcm" http://localhost:5000/predict
+
+Train
+curl -X POST http://localhost:5000/train
+
+
+Ejecutar el archivo cliente para consumo de servicios automatizado desde la ruta actual del archivo
+
+python3 client.py
+
+
+
+
+
+
+
+
 </details>

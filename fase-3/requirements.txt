@@ -1,0 +1,4 @@
+fastai==2.7.13
+pydicom==2.4.4
+scikit-learn
+pandas
