@@ -238,37 +238,91 @@ Una vez finalizada la ejecución se obtiene el archivo **export.pkl** con el cua
 <summary style="cursor: pointer; font-weight: bold; font-size:22px">📁 Paso a paso de ejecución del proyecto en la fase 3</summary>
 <br>
 
-*Proximamente...*
+## **CONSIDERACIONES INICIALES**
 
-Generar imagen que contiene api
+* *En esta fase 3 es necesario contemplar que la ejecución de la misma se realizará en un SO Linux (preferiblemente Ubuntu) con Docker instalado de acuerdo a la documentación oficial en https://docs.docker.com/engine/install/*
+
+* *Por favor leer detalladamente y seguir las instrucciones de arriba hacia abajo*
+
+### **PASOS PARA LA CORRECTA EJECUCIÓN**
+
+Al clonar o descargar este repositorio obtenemos la carpeta fase-3 con los archivos:
+
+*Cada archivo tiene los comentarios con explicaciones necesarias dado el caso*
+
+├── imagenesPrueba (carpeta que contiene cuatro imagenes dcm para usar de prueba en la api)
+
+├── apirest.py
+
+├── client.py
+
+├── Dockerfile
+
+├── export.pkl
+
+├── helpers.py
+
+├── predict.py
+
+├── requirements.txt
+
+├── submission.csv
+
+├── test.csv
+
+├── train.csv
+
+├── train.py
+
+**Posteriormente ubicados en la carpeta fase-3 en una consola de comandos, realizamos lo siguiente:**
+
+Construimos la imagen de Docker con el comando:
+```bash
 sudo docker build -t api_cancer_prediction .
+```
+***PD: Por favor tener un poco de paciencia en la espera de la construcción de la imagen ya que para la ejecución de este proyecto es explicitamente necesario usar librerias de torch y fastai las cuales son extensas***
 
-Ejecutar contenedor
+Realizamos la ejecución del contenedor con la api expuesta por el puerto 5000 tanto en el contenedor como por fuera del mismo:
+```bash
 sudo docker run -p 5000:5000 api_cancer_prediction
+```
+Con esto ya tendriamos acondicionada la api para hacer uso del endpoint de predicción y el de entrenamiento.
 
-Probar servicios
+### Probar servicios
 
-Para probar desde la maquina ubuntu tener instalada la libreria request
- pip install requests
+Para probar desde la maquina ubuntu podemos realizar las siguientes acciones con la api:
 
-Predict
+### Predecir sobre alguna de las imagenes proprocionadas
+
+En una consola de comando diferente a la de donde se puso en ejecución el contenedor con la api, podemos ejecutar un curl como el siguiente indicando el path completo donde quedaron las imagenes de la carpeta fase-3, tenemos estos dos ejemplos:
+
+```bash
 curl -X POST -F "file=@/home/andres_udem/Documents/PruebaFuncionamiento/proyecto-sustituto-modelos-l-2025-1/fase-3/imagenesPrueba/68070693.dcm" http://localhost:5000/predict
-
+```
+```bash
 curl -X POST -F "file=@/home/andres_udem/Documents/PruebaFuncionamiento/proyecto-sustituto-modelos-l-2025-1/fase-3/imagenesPrueba/361203119.dcm" http://localhost:5000/predict
+```
 
-Train
+***PD: Las ubicaciones de los file varia de acuerdo a la ubicación local que se le de al proyecto, porfavor cambiarlas por las ubicaciones desigandas en su equipo local.***
+
+### Probar la api de entrenamiento
+
+Podemos probar la api de entrenamiento del modelo igualmente mediante la instrucción curl siguiente:
+
+```bash
 curl -X POST http://localhost:5000/train
+```
 
+*PD: Las imagenes indicadas para el entrenamieno se encuentran dentro del contenedor con la finalidad de autogestión.*
 
-Ejecutar el archivo cliente para consumo de servicios automatizado desde la ruta actual del archivo
+### Probar automaticamente desde el archivo client.py
 
-python3 client.py
+Como se sugiere en el proyecto se debe tener el archivo cliente para consumo de servicios automatizado, es asi como en una consola **nos ubicamos en la carpeta fase-3 del proyecto descargado o clonado desde github** y ejecutamos el siguiente comando para hacer la prueba automatizada de los servicios:
 
-
-
-
-
-
+```bash
+python3 client.py imagenesPrueba/68070693.dcm
+```
+Se puede cambiar el id de la imagen en las pruebas que se realicen.
 
 
 </details>

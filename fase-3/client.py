@@ -1,18 +1,10 @@
-"""
-Cliente Python para consumir la API REST desplegada en Docker.
-- Realiza una predicción enviando una imagen DICOM.
-- Inicia el entrenamiento remoto del modelo.
-"""
-
 import requests
+import argparse
 
-# Dirección del contenedor (ajusta si usas Docker Desktop, WSL o puerto diferente)
+# Dirección del contenedor (ajusta si es necesario)
 BASE_URL = "http://localhost:5000"
 
 def predict_dicom(dcm_path):
-    """
-    Envía una imagen DICOM al endpoint /predict y devuelve la probabilidad de cáncer.
-    """
     with open(dcm_path, 'rb') as f:
         files = {'file': (dcm_path, f, 'application/dicom')}
         response = requests.post(f"{BASE_URL}/predict", files=files)
@@ -25,27 +17,23 @@ def predict_dicom(dcm_path):
         print(response.text)
 
 def train_model():
-    """
-    Llama al endpoint /train para entrenar el modelo.
-    """
     response = requests.post(f"{BASE_URL}/train")
-    
     if response.status_code == 200:
         print("✅ Entrenamiento iniciado correctamente")
         print(response.json()["message"])
-        print("🔍 Logs del entrenamiento:\n")
-        print(response.json()["stdout"])
+        print("\n📄 Logs del entrenamiento:\n")
+        print(response.json().get("stdout", "(sin logs)"))
     else:
         print("❌ Error al iniciar entrenamiento:", response.status_code)
         print(response.text)
 
-# 🧪 Ejemplo de uso
 if __name__ == "__main__":
-    # Reemplaza con la ruta a una imagen DICOM real que tengas localmente
-    test_dcm_path = "/home/andres_udem/Documents/PruebaFuncionamiento/proyecto-sustituto-modelos-l-2025-1/fase-3/imagenesPrueba/68070693.dcm"
+    parser = argparse.ArgumentParser(description="Cliente API cáncer de mama")
+    parser.add_argument("dicom_path", help="Ruta al archivo DICOM a predecir")
+    args = parser.parse_args()
 
     print("\n--- Realizando predicción ---")
-    predict_dicom(test_dcm_path)
+    predict_dicom(args.dicom_path)
 
     print("\n--- Iniciando entrenamiento ---")
     try:
